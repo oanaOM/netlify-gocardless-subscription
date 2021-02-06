@@ -1,0 +1,23 @@
+{
+  "name": "netlify-gocardless-subscription",
+  "version": "1.0.0",
+  "description": "Next.js project deployed on netlify powered by gocardless",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oanaOM/netlify-gocardless-subscription.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oanaOM/netlify-gocardless-subscription/issues"
+  },
+  "homepage": "https://github.com/oanaOM/netlify-gocardless-subscription#readme"
+}
