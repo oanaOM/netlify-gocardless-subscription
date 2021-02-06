@@ -7,7 +7,6 @@ import "@reach/tabs/styles.css"
 export default function Home() {
   const identity = useIdentityContext()
   const [dialog, setDialog]= useState(false)
-  console.log(">>>", identity);
   
   return (
     <>
