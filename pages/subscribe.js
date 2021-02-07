@@ -7,7 +7,6 @@ import Logo from "../components/Logo";
 import { FaArrowLeft } from "react-icons/fa";
 import SubscriptionForm from "../components/SubscriptionForm";
 
-
 const Container = styled.div`
   position: fixed;
   top: 0;
@@ -45,7 +44,7 @@ const SubscriptionDetails = styled.div`
 `;
 
 const SubscriptionDetailsTitle = styled.h3`
-  color: rgba(26,26,26,.5);
+  color: rgba(26, 26, 26, 0.5);
 `;
 
 const Subscription = styled.div`
@@ -54,11 +53,11 @@ const Subscription = styled.div`
 `;
 
 const SubscriptionDetailsFooter = styled.footer`
-    position: absolute;
-    bottom: 0;
-    margin: 32px 0;
-    font-size: 0.75rem;
-    color: rgba(26,26,26,.5);
+  position: absolute;
+  bottom: 0;
+  margin: 32px 0;
+  font-size: 0.75rem;
+  color: rgba(26, 26, 26, 0.5);
 `;
 
 export default function Subscribe({ subscriptionType }) {
@@ -77,9 +76,13 @@ export default function Subscribe({ subscriptionType }) {
               </Link>
               <Logo src="happy_dog_face.png" width="35" height="35" />
             </div>
-            <SubscriptionDetailsTitle>Subscribe to Pro</SubscriptionDetailsTitle>
+            <SubscriptionDetailsTitle>
+              Subscribe to Pro
+            </SubscriptionDetailsTitle>
             <Subscription>{subscription}</Subscription>
-            <SubscriptionDetailsFooter>Powered by <strong>GoCardless</strong></SubscriptionDetailsFooter>
+            <SubscriptionDetailsFooter>
+              Powered by <strong>GoCardless</strong>
+            </SubscriptionDetailsFooter>
           </SubscriptionDetails>
         </LeftSide>
         <RightSide>

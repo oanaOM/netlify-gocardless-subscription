@@ -9,7 +9,6 @@ export default function Footer() {
     margin: 24px 0;
     padding: 24px;
     width: 100%;
-
   `;
   return (
     <>

@@ -50,13 +50,13 @@ const Button = styled.button(
     ":hover": {
       backgroundColor: `${Colors.GREEN_DARKER}`,
     },
-    ":focus":{
-      outline:'none',
+    ":focus": {
+      outline: "none",
     },
     "> a": {
-      color: 'inherit',
-      textDecoration: 'none'
-    }
+      color: "inherit",
+      textDecoration: "none",
+    },
   },
   ({ variant = "primary" }) => buttonVariants[variant]
 );
@@ -163,5 +163,5 @@ export {
   FormInput,
   FormLabel,
   SelectDropdown,
-  FormButtons
+  FormButtons,
 };

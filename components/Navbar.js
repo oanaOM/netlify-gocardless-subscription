@@ -1,8 +1,7 @@
-import { Button } from "../components/lib";
+import { Button } from "./Lib";
 import styled from "@emotion/styled";
 import Logo from "./Logo";
 import { useIdentityContext } from "react-netlify-identity-widget";
-
 
 const Container = styled.header`
   border-bottom: 2px solid #9ad9c7;

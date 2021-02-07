@@ -11,14 +11,11 @@ import Subscriptions from "../components/Subscriptions";
 
 import NavBar from "../components/Navbar";
 import Logo from "../components/Logo";
-import { Button, FormButtons } from "../components/lib";
-import Footer from "../components/Footer";
+import { Button, FormButtons } from "../components/Lib";
 
 export default function Home() {
   const identity = useIdentityContext();
   const [dialog, setDialog] = useState(false);
-  const [accessToken, setAccessToken] = useState("");
-  const [roles, setRoles] = useState("");
 
   useEffect(async () => {
     if (!identity) {
@@ -37,9 +34,7 @@ export default function Home() {
         <title>Build with Next.js </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {identity && identity.isLoggedIn && (
-        <NavBar showBrandLogo={false}/>
-      )}
+      {identity && identity.isLoggedIn && <NavBar showBrandLogo={false} />}
       <header className="header">
         {!identity.isLoggedIn && (
           <>
@@ -51,19 +46,19 @@ export default function Home() {
         {identity && identity.isLoggedIn && (
           <>
             <h1>Choose a subscription plan</h1>
-            <Subscriptions/>
+            <Subscriptions />
           </>
         )}
       </header>
       <main className="container">
         {!dialog && !identity.isLoggedIn && (
           <>
-          <FormButtons>
-            <Button onClick={() => setDialog(true)}>Log in</Button>
-            <Button onClick={() => setDialog(true)}>Sign up</Button>
-          </FormButtons>
+            <FormButtons>
+              <Button onClick={() => setDialog(true)}>Log in</Button>
+              <Button onClick={() => setDialog(true)}>Sign up</Button>
+            </FormButtons>
           </>
-          )}
+        )}
         {/* <Footer/> */}
       </main>
       <IdentityModal

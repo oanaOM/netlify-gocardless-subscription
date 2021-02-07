@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
-import { Button } from "../components/lib";
+import { Button } from "./Lib";
 import { useRouter } from "next/router";
 
 const Box = styled.section`
@@ -36,9 +36,7 @@ export default function SubscriptioBox({
       <h2>{title}</h2>
       <p>{description}</p>
       <img src={`/${imgSRC}`} width="50%" height="auto" />
-      <Button onClick={handleSubscription}>
-        {subscription}
-      </Button>
+      <Button onClick={handleSubscription}>{subscription}</Button>
     </Box>
   );
 }
