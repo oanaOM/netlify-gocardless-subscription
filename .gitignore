@@ -3,3 +3,4 @@
 .next
 .env
 functions/node_modules
+.DS_Store
