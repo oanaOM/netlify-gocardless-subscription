@@ -1,0 +1,8 @@
+export const GREEN_LIGHT = '#9AD9C7'
+export const GREEN_DARKER = '#425953'
+export const YELLOW_ISH = '#A69872'
+export const PINK_DARKER = '#A67C7C'
+export const PINK_IVORY = '#D9C8BF'
+export const WHITE_V2 = '#f1f1f4'
+export const GREYISH = '#f1f2f7'
+export const RED_DANGER = '#dc3545'

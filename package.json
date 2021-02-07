@@ -21,12 +21,15 @@
   },
   "homepage": "https://github.com/oanaOM/netlify-gocardless-subscription#readme",
   "dependencies": {
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
     "@reach/dialog": "^0.13.0",
     "@reach/tabs": "^0.13.0",
     "@reach/visually-hidden": "^0.13.0",
     "next": "^10.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
     "react-netlify-identity": "^0.2.5",
     "react-netlify-identity-widget": "^0.2.7"
   }
