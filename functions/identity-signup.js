@@ -22,9 +22,9 @@ exports.handler = async (event) => {
   await faunaFetch({
     query: `
       mutation ($netlifyID: ID!, $gocardlessID: ID!) {
-        createUser(data: { netlifyID: $netlifyID $gocardlessID: $gocardlessID }) {
+        createUser(data: { netlifyID: $netlifyID gocardlessID: $gocardlessID }) {
           netlifyID
-       $gocardlessID
+          gocardlessID
         }
       }
     `,
