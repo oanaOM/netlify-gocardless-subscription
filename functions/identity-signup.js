@@ -15,33 +15,6 @@ exports.handler = async (event) => {
 
   const netlifyID = user.id;
 
-  // TODO: create a new GC customer
-  // create redirect flow
-  const redirectFlow = await clientGC.redirectFlows.create({
-    description: "Paws meals",
-    session_token: "SESS_wSs0uGYMISxzqOBq",
-    success_redirect_url: "https://nervous-minsky-4dcffc.netlify.app/success",
-    prefilled_customer: {
-      given_name: "Frank",
-      family_name: "Osborne",
-      email: user.email
-    }
-  });
-
-  console.log("redirectFlow.id: ", redirectFlow.id);
-  console.log("redirectFlow.redirect_url", redirectFlow.redirect_url); 
-
-  // complete the redirect flow
-  const completeRedirectFlow = await clientGC.redirectFlows.complete(
-    redirectFlow.id,
-    {
-      session_token: "SESS_wSs0uGYMISxzqOBq"
-    }
-  );
-
-  console.log(`Mandate: ${completeRedirectFlow.links.mandate}`);
-  console.log(`Customer: ${completeRedirectFlow.links.customer}`);
-
   const gocardlessID = 2;
 
   // TODO: store the Netlify and GoCardless IDs in Fauna
