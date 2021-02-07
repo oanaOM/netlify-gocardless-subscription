@@ -1,6 +1,7 @@
 const gocardless = require("gocardless-nodejs");
-
 const constants = require("gocardless-nodejs/constants");
+const fetch = require("node-fetch");
+
 
 const gcClient = gocardless(
   // We recommend storing your access token in an environment
@@ -16,8 +17,13 @@ exports.handler = async (event) => {
 
   console.log(JSON.stringify(user, null, 2));
 
-  // TODO: create a customer record in Fauna
+  const netlifyID = user.id;
+
+
+
+
   // TODO: create a new GC customer
+  const gocardlessID = 1;
   const customer = await client.customers.create({
     email: user.email,
     given_name: "Bam",
@@ -34,19 +40,32 @@ exports.handler = async (event) => {
 
   console.log("GC Customer: ", customer)
   
-  // await client.subscriptions.create({
-  //   amount: "2500",
-  //   currency: "GBP",
-  //   name: "Monthly Magazine",
-  //   interval_unit: "monthly",
-  //   day_of_month:  "1",
-  //   metadata: {
-  //     order_no: "ABCD1234"
-  //   },
-  //   links: {
-  //     mandate: "MA123"
-  //   }
-  // });
+
+    // TODO: create a customer record in Fauna
+    const response = async fetch('https://graphql.fauna.com/graphql', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.FAUNA_SERVER_KEY}`,
+      },
+      body: JSON.stringify({
+        query:`
+        mutation($netlifyID: ID!, gocardlessID: ID!){
+          createUser(data: {netlifyID: netlifyID, gocardlessID: gocardlessID}){
+            netlifyID,
+            gocardlessID
+          }
+        }
+        `,
+        variables:{
+          netlifyID,
+          gocardlessID
+        },
+      }),
+    })
+    .then(res=>res.json())
+    .catch((err)=>console.error(JSON.stringify(err, null, 2)));
+
+    console.log({response});
 
 
   return {
