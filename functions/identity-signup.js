@@ -2,7 +2,7 @@ const gocardless = require("gocardless-nodejs");
 const constants = require("gocardless-nodejs/constants");
 const { faunaFetch } = require("./utils/fauna");
 
-const gcClient = gocardless(
+const clientGC = gocardless(
   // We recommend storing your access token in an environment
   // variable for security
   process.env.GC_AUTHORIZATION_TOKEN,
@@ -17,7 +17,7 @@ exports.handler = async (event) => {
 
   // TODO: create a new GC customer
   // create redirect flow
-  const redirectFlow = await client.redirectFlows.create({
+  const redirectFlow = await clientGC.redirectFlows.create({
     description: "Paws meals",
     session_token: "SESS_wSs0uGYMISxzqOBq",
     success_redirect_url: "https://nervous-minsky-4dcffc.netlify.app/success",
@@ -32,7 +32,7 @@ exports.handler = async (event) => {
   console.log("redirectFlow.redirect_url", redirectFlow.redirect_url); 
 
   // complete the redirect flow
-  const completeRedirectFlow = await client.redirectFlows.complete(
+  const completeRedirectFlow = await clientGC.redirectFlows.complete(
     redirectFlow.id,
     {
       session_token: "SESS_wSs0uGYMISxzqOBq"
