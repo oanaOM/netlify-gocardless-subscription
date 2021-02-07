@@ -5,7 +5,7 @@ import {
   FormItem,
   FormLabel,
   FormButtons,
-} from "./Lib";
+} from "./Library";
 import * as Color from "../styles/colors";
 import { useRouter } from "next/router";
 import Link from "next/link";

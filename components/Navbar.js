@@ -1,4 +1,4 @@
-import { Button } from "./Lib";
+import { Button } from "./Library";
 import styled from "@emotion/styled";
 import Logo from "./Logo";
 import { useIdentityContext } from "react-netlify-identity-widget";

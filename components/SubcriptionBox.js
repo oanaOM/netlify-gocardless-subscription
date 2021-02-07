@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
-import { Button } from "./Lib";
+import { Button } from "./Library";
 import { useRouter } from "next/router";
 
 const Box = styled.section`

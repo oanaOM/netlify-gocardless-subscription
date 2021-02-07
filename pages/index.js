@@ -11,7 +11,7 @@ import Subscriptions from "../components/Subscriptions";
 
 import NavBar from "../components/Navbar";
 import Logo from "../components/Logo";
-import { Button, FormButtons } from "../components/Lib";
+import { Button, FormButtons } from "../components/Library";
 
 export default function Home() {
   const identity = useIdentityContext();
