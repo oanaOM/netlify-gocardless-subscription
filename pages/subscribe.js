@@ -63,7 +63,7 @@ const SubscriptionDetailsFooter = styled.footer`
 export default function Subscribe({ subscriptionType }) {
   const identity = useIdentityContext();
   // const {user} = identity.user;
-  const subscription = localStorage ? localStorage.getItem("subscription") : "";
+  // const subscription = localStorage ? localStorage.getItem("subscription") : "";
   console.log(identity);
   return (
     <Container>
@@ -79,7 +79,7 @@ export default function Subscribe({ subscriptionType }) {
             <SubscriptionDetailsTitle>
               Subscribe to Pro
             </SubscriptionDetailsTitle>
-            <Subscription>{subscription}</Subscription>
+            <Subscription>Subscribe to Pro</Subscription>
             <SubscriptionDetailsFooter>
               Powered by <strong>GoCardless</strong>
             </SubscriptionDetailsFooter>
