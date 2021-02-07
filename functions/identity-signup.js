@@ -1,6 +1,6 @@
 const gocardless = require("gocardless-nodejs");
 const constants = require("gocardless-nodejs/constants");
-const fetch = require("node-fetch");
+const { faunaFetch } = require("./utils/fauna");
 
 const gcClient = gocardless(
   // We recommend storing your access token in an environment
@@ -18,30 +18,23 @@ exports.handler = async (event) => {
   // TODO: create a new GC customer
   const gocardlessID = 1;
 
-  // TODO: create a customer record in Fauna
-  const response = await fetch("https://graphql.fauna.com/graphql", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.FAUNA_SERVER_KEY}`,
-    },
-    body: JSON.stringify({
-      query: `
-      mutation($netlifyID: ID!, $gocardlessID: ID!){
-        createUser(data: {netlifyID: $netlifyID, $gocardlessID: gocardlessID}){
-          netlifyID,
-          gocardlessID
+  // TODO: store the Netlify and GoCardless IDs in Fauna
+  await faunaFetch({
+    query: `
+      mutation ($netlifyID: ID!, $gocardlessID: ID!) {
+        createUser(data: { netlifyID: $netlifyID $gocardlessID: $gocardlessID }) {
+          netlifyID
+       $gocardlessID
         }
-      } `,
-      variables: {
-        netlifyID,
-        gocardlessID,
-      },
-    }),
-  })
-    .then((res) => res.json())
-    .catch((err) => console.error(JSON.stringify(err, null, 2)));
+      }
+    `,
+    variables: {
+      netlifyID: netlifyID,
+      gocardlessID: gocardlessID,
+    },
+  });
 
-  console.log({ response });
+  console.log("user", JSON.stringify(user, null, 2));
 
   return {
     statusCode: 200,
