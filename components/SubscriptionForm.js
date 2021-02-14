@@ -9,31 +9,31 @@ import {
 import * as Color from "../styles/colors";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { addSubscription } from "../lib/service";
+import {useState} from 'react';
 
 export default function SubscriptionForm() {
   const router = useRouter();
 
+  const [subscription, setSubscription] = useState();
+  const [error, setError] = useState({msg: false});
+
   function handleSubmit(e) {
     e.preventDefault();
-    // const data = e.target.elements;
-    // const formData = {
-    //   given_name: data.given_name.value,
-    //   family_name: data.family_name.value,
-    //   email: data.email.value,
-    //   address_line1: data.address_line1.value,
-    //   city: data.city.value,
-    //   postal_code: data.postal_code.value,
-    // };
+    const data = e.target.elements;
 
-    // client("http://localhost:3000/api/customers", { data: formData })
-    //   .then((response) => {
-    //     console.log("POST response here!!! ", response);
-    //     router.push(response.message);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error: ", error);
-    //     console.error(error);
-    //   });
+    const newSubscription = {
+      given_name: data.given_name.value,
+      family_name: data.family_name.value,
+      email: data.email.value,
+    };
+
+    addSubscription(newSubscription)
+    .then(({ data }) => {
+      console.log(data);
+      //setSubscription(data);
+    })
+    .catch(()=>setError({msg: true}))
 
     return e.target.elements;
   }
@@ -42,6 +42,7 @@ export default function SubscriptionForm() {
     <>
       <div>
         <h2>Basic Subscription</h2>
+        {error.msg ? <span className="error">Ups! something went wrong.</span> : null}
         <Form onSubmit={handleSubmit}>
           <FormItem>
             <FormLabel htmlFor="given_name" isRequired>
@@ -92,7 +93,7 @@ export default function SubscriptionForm() {
               <Link href="/">Cancel</Link>
             </Button>
             <Button type="submit" variant="primary">
-              Next
+              Subscribe
             </Button>
           </FormButtons>
         </Form>

@@ -2,3 +2,8 @@ type User {
     netlifyID: ID!
     gocardlessID: ID!
 }
+
+type Query{
+    getUserByNeltifyID(netlifyID: ID!): User!
+    getUserByGocardlessID(gocardlessID: ID!): User!
+}

@@ -12,10 +12,24 @@ import Subscriptions from "../components/Subscriptions";
 import NavBar from "../components/Navbar";
 import Logo from "../components/Logo";
 import { Button, FormButtons } from "../components/Library";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const identity = useIdentityContext();
   const [dialog, setDialog] = useState(false);
+
+  const router = useRouter();
+  
+    const getCustomer = () =>{
+      fetch('/.netlify/functions/get-customer', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.FAUNA_SERVER_KEY}`,
+        },
+      })
+      .then((res)=>res.json())
+      .catch((err)=>console.error(err))
+    }
 
   useEffect(async () => {
     if (!identity) {
@@ -25,13 +39,20 @@ export default function Home() {
 
       const { roles } = identity.user.app_metadata;
       setRoles(roles);
+
+      console.log("AICI");
+      getCustomer();
     }
   }, []);
+
+  const onLoginButton = () => {
+    
+  };
 
   return (
     <>
       <Head>
-        <title>Build with Next.js </title>
+        <title>Happy Paws! </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       {identity && identity.isLoggedIn && <NavBar showBrandLogo={false} />}
@@ -55,6 +76,7 @@ export default function Home() {
           <>
             <FormButtons>
               <Button onClick={() => setDialog(true)}>Log in</Button>
+              {/* <Button onClick={onLoginButton}>Log in</Button> */}
               <Button onClick={() => setDialog(true)}>Sign up</Button>
             </FormButtons>
           </>

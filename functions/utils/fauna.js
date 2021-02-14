@@ -14,3 +14,14 @@ exports.faunaFetch = async ({ query, variables }) => {
     .then((res) => res.json())
     .catch((err) => console.error(JSON.stringify(err, null, 2)));
 };
+
+exports.faunaGet = async ({ query, variables }) => {
+  return await fetch('https://graphql.fauna.com/graphql', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.FAUNA_SERVER_KEY}`,
+    }
+  })
+    .then((res) => res.json())
+    .catch((err) => console.error(JSON.stringify(err, null, 2)));
+};
