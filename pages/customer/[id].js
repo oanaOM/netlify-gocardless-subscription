@@ -1,54 +1,36 @@
-import { useEffect } from "react";
 import Subscriptions from "../../components/Subscriptions";
+import Head from "next/head";
+import NavBar from "../../components/Navbar";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useIdentityContext } from "react-netlify-identity-widget";
+import { Button } from "../../components/Library";
 
-export default function Customer( ) {
+export default function Customer() {
+  const [customer, setCustomer] = useState();
+  const identity = useIdentityContext();
 
-  const getCustomer = () =>{
-    fetch('/.netlify/functions/get-customer', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.FAUNA_SERVER_KEY}`,
-      },
-    })
-    .then((res)=>res.json())
-    .catch((err)=>console.error(err))
-  }
+  const router = useRouter();
+  const handleLogout = () => identity.logoutUser();
 
-  useEffect(()=>{
-    console.log("AICICI");
-    getCustomer();
-  },[])
 
+  useEffect(() => {
+    setCustomer(router.query.id);
+  }, []);
   return (
     <>
-      <h1>Choose a subscription plan</h1>
-      <Subscriptions />
+      <Head>
+        <title>Happy Paws! </title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <NavBar showBrandLogo={false} />
+      <main>
+      <Button onClick={handleLogout}>Logout</Button>
+        <h1>Welcome {customer}!</h1>
+        <h3>Choose a subscription plan</h3>
+        <Subscriptions />
+      </main>
     </>
   );
 }
-
-// export async function getStaticPaths() {
-//   const customers = [{id:1, id:2, id:9}]
-
-//   const paths = customers.map((customer) => ({
-//     params: { id: customer.id },
-// }))
-// return {
-//   paths: [
-//     { params: { id: '1' } },
-//     { params: { id: '2' } },
-//     { params: { id: '9' } }
-//   ],
-//   fallback: false
-// }
-// }
-
-// export async function getStaticProps({ params }) {
-//   const res = await fetch(`http://localhost:3000/customer/${params.id}`);
-
-//   const customer = await res.json();
-
-//   return {
-//     props: { id: 1 },
-//   };
-// }

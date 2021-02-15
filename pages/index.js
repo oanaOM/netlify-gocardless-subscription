@@ -7,7 +7,7 @@ import {
 import "react-netlify-identity-widget/styles.css";
 import "@reach/tabs/styles.css";
 import { useEffect } from "react";
-import Subscriptions from "../components/Subscriptions";
+
 
 import NavBar from "../components/Navbar";
 import Logo from "../components/Logo";
@@ -19,17 +19,6 @@ export default function Home() {
   const [dialog, setDialog] = useState(false);
 
   const router = useRouter();
-  
-    const getCustomer = () =>{
-      fetch('/.netlify/functions/get-customer', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${process.env.FAUNA_SERVER_KEY}`,
-        },
-      })
-      .then((res)=>res.json())
-      .catch((err)=>console.error(err))
-    }
 
   useEffect(async () => {
     if (!identity) {
@@ -39,15 +28,8 @@ export default function Home() {
 
       const { roles } = identity.user.app_metadata;
       setRoles(roles);
-
-      console.log("AICI");
-      getCustomer();
     }
   }, []);
-
-  const onLoginButton = () => {
-    
-  };
 
   return (
     <>
@@ -55,19 +37,12 @@ export default function Home() {
         <title>Happy Paws! </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {identity && identity.isLoggedIn && <NavBar showBrandLogo={false} />}
       <header className="header">
         {!identity.isLoggedIn && (
           <>
             <Logo src="nerd-doggie.png" width="120" height="120" />
             <h1>Happy Paws</h1>
             <p>Fresh homemade food prepared for your dog. Vet approved.</p>
-          </>
-        )}
-        {identity && identity.isLoggedIn && (
-          <>
-            <h1>Choose a subscription plan</h1>
-            <Subscriptions />
           </>
         )}
       </header>
@@ -86,7 +61,10 @@ export default function Home() {
       <IdentityModal
         showDialog={dialog}
         onCloseDialog={() => setDialog(false)}
-        onLogin={(user) => console.log("hello ", user?.user_metadata)}
+        onLogin={(user) => router.push({
+          pathname: '/customer/[id]',
+          query: { id: user.user_metadata.full_name },
+        })}
         onSignup={(user) => console.log("welcome ", user?.user_metadata)}
         onLogout={() => console.log("bye ")}
       />
