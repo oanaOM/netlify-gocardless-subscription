@@ -1,11 +1,15 @@
+import React from "react";
+import { FaArrowLeft } from "react-icons/fa";
+
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { useIdentityContext } from "react-netlify-identity-widget";
-import styled from "@emotion/styled";
 
-import * as Colors from "../styles/colors";
+import styled from "@emotion/styled";
 import Logo from "../components/Logo";
-import { FaArrowLeft } from "react-icons/fa";
 import SubscriptionForm from "../components/SubscriptionForm";
+import GCFooter from "../components/GCFooter";
+import * as Colors from "../styles/colors";
 
 const Container = styled.div`
   position: fixed;
@@ -52,26 +56,21 @@ const Subscription = styled.div`
   font-size: 2rem;
 `;
 
-const SubscriptionDetailsFooter = styled.footer`
-  position: absolute;
-  bottom: 0;
-  margin: 32px 0;
-  font-size: 0.75rem;
-  color: rgba(26, 26, 26, 0.5);
-`;
 
-export default function Subscribe({ subscriptionType }) {
-  const identity = useIdentityContext();
-  // const {user} = identity.user;
-  // const subscription = localStorage ? localStorage.getItem("subscription") : "";
-  console.log(identity);
+export default function Subscribe() {
+  const { user } = useIdentityContext();
+  const { full_name } = user.user_metadata;
+
+  console.log(user);
   return (
     <Container>
       <Main>
         <LeftSide>
           <SubscriptionDetails>
             <div>
-              <Link href="/">
+              <Link href={{
+                "pathname": `/customer/${full_name}`
+              }} passHref>
                 <FaArrowLeft />
               </Link>
               <Logo src="happy_dog_face.png" width="35" height="35" />
@@ -80,13 +79,11 @@ export default function Subscribe({ subscriptionType }) {
               Subscribe to Pro
             </SubscriptionDetailsTitle>
             <Subscription>Subscribe to Pro</Subscription>
-            <SubscriptionDetailsFooter>
-              Powered by <strong>GoCardless</strong>
-            </SubscriptionDetailsFooter>
+            <GCFooter/>
           </SubscriptionDetails>
         </LeftSide>
         <RightSide>
-          <SubscriptionForm />
+          <SubscriptionForm user={full_name}/>
         </RightSide>
       </Main>
     </Container>

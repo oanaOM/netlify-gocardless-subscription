@@ -1,10 +1,9 @@
-import { useState } from "react";
-import Head from "next/head";
+import React from "react";
+
 import "react-netlify-identity-widget/styles.css";
 import "@reach/tabs/styles.css";
-import Box from "../components/SubcriptionBox";
+import Box from "./SubscriptionBox";
 
-import Logo from "../components/Logo";
 
 export default function Subscriptions() {
   return (

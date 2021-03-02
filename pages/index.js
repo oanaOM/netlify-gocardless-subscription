@@ -1,15 +1,16 @@
+import React from "react";
+
 import { useState } from "react";
 import Head from "next/head";
 import {
   IdentityModal,
-  useIdentityContext,
+  useIdentityContext
 } from "react-netlify-identity-widget";
 import "react-netlify-identity-widget/styles.css";
 import "@reach/tabs/styles.css";
 import { useEffect } from "react";
 
 
-import NavBar from "../components/Navbar";
 import Logo from "../components/Logo";
 import { Button, FormButtons } from "../components/Library";
 import { useRouter } from "next/router";
@@ -62,8 +63,8 @@ export default function Home() {
         showDialog={dialog}
         onCloseDialog={() => setDialog(false)}
         onLogin={(user) => router.push({
-          pathname: '/customer/[id]',
-          query: { id: user.user_metadata.full_name },
+          "pathname": "/customer/[id]",
+          "query": { "id": user.user_metadata.full_name }
         })}
         onSignup={(user) => console.log("welcome ", user?.user_metadata)}
         onLogout={() => console.log("bye ")}

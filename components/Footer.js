@@ -1,7 +1,8 @@
+import React from "react";
 import styled from "@emotion/styled";
 
 export default function Footer() {
-  const Footer = styled.footer`
+  const FooterTag = styled.footer`
     position: absolute;
     bottom: 0;
     text-align: center;
@@ -12,9 +13,9 @@ export default function Footer() {
   `;
   return (
     <>
-      <Footer>
+      <FooterTag>
         Made with <img src="/heart_blue.svg" alt="love" /> for you
-      </Footer>
+      </FooterTag>
     </>
   );
 }

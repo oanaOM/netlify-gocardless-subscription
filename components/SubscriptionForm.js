@@ -1,48 +1,50 @@
+import React from "react";
+import { useState } from "react";
+
 import {
   Button,
   Form,
   FormInput,
   FormItem,
   FormLabel,
-  FormButtons,
+  FormButtons
 } from "./Library";
 import * as Color from "../styles/colors";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { addSubscription } from "../lib/service";
-import {useState} from 'react';
 
-export default function SubscriptionForm() {
-  const router = useRouter();
+export default function SubscriptionForm({ user }) {
 
-  const [subscription, setSubscription] = useState();
-  const [error, setError] = useState({msg: false});
+  const [error, setError] = useState({ "msg": false });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const data = e.target.elements;
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const formData = evt.target.elements;
 
     const newSubscription = {
-      given_name: data.given_name.value,
-      family_name: data.family_name.value,
-      email: data.email.value,
+      "email": formData.email.value,
+      "family_name": formData.family_name.value,
+      "given_name": formData.given_name.value
     };
 
     addSubscription(newSubscription)
     .then(({ data }) => {
       console.log(data);
-      //setSubscription(data);
+      // SetSubscription(data);
     })
-    .catch(()=>setError({msg: true}))
+    .catch(() => setError({ "msg": true }));
 
-    return e.target.elements;
-  }
+    return evt.target.elements;
+  };
 
   return (
     <>
       <div>
-        <h2>Basic Subscription</h2>
-        {error.msg ? <span className="error">Ups! something went wrong.</span> : null}
+        <h2>Welcome {user}!</h2>
+        <p>Basic Subscription</p>
+        {error.msg
+            ? <span className="error">Ups! something went wrong.</span>
+            : null}
         <Form onSubmit={handleSubmit}>
           <FormItem>
             <FormLabel htmlFor="given_name" isRequired>
@@ -77,13 +79,16 @@ export default function SubscriptionForm() {
 
           <p
             style={{
-              fontStyle: "italic",
-              fontSize: "0.85rem",
-              width: "100%",
-              textAlign: "right",
+              "fontSize": "0.85rem",
+              "fontStyle": "italic",
+              "textAlign": "right",
+              "width": "100%"
             }}
           >
-            <small style={{ content: "*", color: `${Color.RED_DANGER}` }}>
+            <small style={
+              { "color": `${Color.RED_DANGER}`,
+                "content": "*" }
+              }>
               *{" "}
             </small>
             Required fields

@@ -2,6 +2,7 @@ import { Button } from "./Library";
 import styled from "@emotion/styled";
 import Logo from "./Logo";
 import { useIdentityContext } from "react-netlify-identity-widget";
+import { useRouter } from "next/router";
 
 const Container = styled.header`
   border-bottom: 2px solid #9ad9c7;
@@ -25,7 +26,11 @@ const Container = styled.header`
 
 export default function NavBar({ showBrandLogo }) {
   const identity = useIdentityContext();
-  const handleLogout = () => identity.logoutUser();
+  const router = useRouter();
+  const handleLogout = () => {
+    identity.logoutUser()
+    router.push("/")
+  };
 
   return (
     <Container>

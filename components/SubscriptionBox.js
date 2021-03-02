@@ -1,7 +1,8 @@
-import Link from "next/link";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+
 import styled from "@emotion/styled";
 import { Button } from "./Library";
-import { useRouter } from "next/router";
 
 const Box = styled.section`
   border: 1px solid #9ad9c7;
@@ -17,18 +18,22 @@ const Box = styled.section`
   text-align: center;
 `;
 
-export default function SubscriptioBox({
+export default function SubscriptionBox({
   title,
   description,
   subscription,
   imgSRC,
 }) {
   const router = useRouter();
+  const handleSubscription = (evt) => {
+    evt.preventDefault();
+    const subscriptionType = evt.target.innerText;
+    localStorage.setItem("subscription", subscriptionType);
 
-  const handleSubscription = (e) => {
-    e.preventDefault();
-    localStorage.setItem("subscription", e.target.innerText);
-    router.push("/subscribe");
+    router.push({
+      "pathname": "/subscribe",
+      "query": `type=${subscriptionType}`
+    });
   };
 
   return (
