@@ -12,10 +12,24 @@ import {
 import * as Color from "../styles/colors";
 import Link from "next/link";
 import { addSubscription } from "../lib/service";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function SubscriptionForm({ user }) {
 
   const [error, setError] = useState({ "msg": false });
+
+
+  useEffect(() => {
+    axios.get("./netlify/functions/get-customer", {
+      "method": "GET",
+      "body": JSON.stringify()
+    })
+    .then((res)=>res.json())
+    .then((data)=>{
+      console.log("data: ", data);
+    })
+  }, []);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

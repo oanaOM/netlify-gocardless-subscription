@@ -28,6 +28,8 @@
     "@reach/tabs": "^0.13.0",
     "@reach/visually-hidden": "^0.13.0",
     "axios": "^0.21.1",
+    "gocardless-nodejs": "^1.4.3",
+    "netlify-cli": "^3.10.6",
     "next": "^10.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

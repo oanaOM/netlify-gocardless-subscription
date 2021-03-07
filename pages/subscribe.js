@@ -1,7 +1,6 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { useIdentityContext } from "react-netlify-identity-widget";
 
@@ -10,6 +9,7 @@ import Logo from "../components/Logo";
 import SubscriptionForm from "../components/SubscriptionForm";
 import GCFooter from "../components/GCFooter";
 import * as Colors from "../styles/colors";
+
 
 const Container = styled.div`
   position: fixed;
@@ -59,7 +59,9 @@ const Subscription = styled.div`
 
 export default function Subscribe() {
   const { user } = useIdentityContext();
-  const { full_name } = user.user_metadata;
+  // const { full_name } = user.user_metadata ? user.user_metadata : "";
+  const { full_name } = "";
+  
 
   console.log(user);
   return (
