@@ -3,7 +3,7 @@ const { faunaFetch } = require("./utils/fauna");
 exports.handler = async (event, context) => {
   const { user } = context.clientContext;
 
-  console.log(user);
+  // console.log(user);
 
   const query = `
     query ($netlifyID: ID!) {
@@ -14,16 +14,17 @@ exports.handler = async (event, context) => {
     }
   `;
 
-  const variables = {netlifyID: user.sub}
+  const variables = { "netlifyID": user.sub };
 
-  const result = await faunaFetch({query, variables})
+  const result = await faunaFetch({ query,
+variables });
 
-  const gocardlessID = result.data.getUserByNetlifyID.gocardlessID
+  const { gocardlessID } = result.data.getUserByNetlifyID;
 
   console.log("gocardlessID", gocardlessID);
 
   return {
-    statusCode: 200,
-    body: JSON.stringify(gocardlessID),
+    "statusCode": 200,
+    "body": JSON.stringify(gocardlessID)
   };
 };

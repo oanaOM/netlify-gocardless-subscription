@@ -1,18 +1,14 @@
-import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 
 
 export default function Hello () {
-    useEffect(() => {
-        axios.get("/.netlify/functions/get-hello")
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-    }, []);
+    useEffect(()=>{
+        // Client-side request are mocked by `mocks/browser.js`.
+        fetch('/api/customers')
+        .then((res) => res.json())
+        .then((res)=>console.log("YOOOOOO", res))
+    })
     return (
         <div>Hello</div>
     );
