@@ -15,6 +15,7 @@ import Logo from "../components/Logo";
 import { Button, FormButtons } from "../components/Library";
 import { useRouter } from "next/router";
 
+
 export default function Home() {
   const identity = useIdentityContext();
   const [dialog, setDialog] = useState(false);
@@ -22,14 +23,21 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(async () => {
-    if (!identity) {
-      identity
-        .getFreshJWT(identity.user.token.access_token)
-        .then((jwt) => setAccessToken(jwt));
+    console.log("Identity exists", identity)
+    if (identity) {
+      // hacky workaround: if the user is already logged in and lands back on this page, log him out
+      identity.logoutUser();
+      // TODO: re-auth the user if token exists
+      // identity
+      //   .getFreshJWT(identity.user.token.access_token)
+      //   .then((jwt) => setAccessToken(jwt));
 
-      const { roles } = identity.user.app_metadata;
-      setRoles(roles);
+      // const { roles } = identity.user.app_metadata;
+      // setRoles(roles);
     }
+
+
+
   }, []);
 
   return (
