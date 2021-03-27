@@ -8,7 +8,7 @@ exports.handler = async (event) => {
   const gocardlessID = 2;
 
   // TODO: store the Netlify and GoCardless IDs in Fauna
-  await faunaFetch({
+  const response = await faunaFetch({
     query: `
       mutation ($netlifyID: ID!, $gocardlessID: ID!) {
         createUser(data: { netlifyID: $netlifyID gocardlessID: $gocardlessID }) {
@@ -21,9 +21,12 @@ exports.handler = async (event) => {
       netlifyID: netlifyID,
       gocardlessID: gocardlessID,
     },
-  });
+  })
+    .then((res) => res.json())
+    .catch((err) => console.error(err))
 
-  console.log("user", JSON.stringify(user, null, 2));
+  console.log("user:", JSON.stringify(user, null, 2));
+  console.log("db user:", response);
 
   return {
     statusCode: 200,

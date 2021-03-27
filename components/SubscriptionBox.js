@@ -23,6 +23,7 @@ export default function SubscriptionBox({
   description,
   subscription,
   imgSRC,
+  customer
 }) {
   const router = useRouter();
   const handleSubscription = (evt) => {
@@ -31,8 +32,7 @@ export default function SubscriptionBox({
     localStorage.setItem("subscription", subscriptionType);
 
     router.push({
-      "pathname": "/subscribe",
-      "query": `type=${subscriptionType}`
+      "pathname": `/customer/${customer}/subscribe`,
     });
   };
 

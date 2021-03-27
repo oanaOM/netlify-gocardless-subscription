@@ -1,4 +1,3 @@
-[build]
-  command = "npm install --prefix=functions && npm run build && npm run export"
-  publish = "out"
-  functions = "functions"
+[dev]
+  framework = "next"
+  command = "npm run dev"

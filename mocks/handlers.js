@@ -74,5 +74,31 @@ export const handlers = [
           }
         }
     }))
+  }),
+
+  rest.post('/mock/customers', (req, res, ctx)=>{
+
+    //const { redirect_flows_id } = req.params
+
+    return res(ctx.json({
+        "redirect_flows": {
+          "id": "redirect_flows_id",
+          "description": "Happy Paws",
+          "session_token": "SESS_wSs0uGYMISxzqOBq",
+          "scheme": null,
+          "success_redirect_url": "https://example.com/pay/confirm",
+          "confirmation_url": `https://pay.gocardless.com/flo/success`,
+          "created_at": "2014-10-22T13:10:06.000Z",
+          "links": {
+            "creditor": "CR123",
+            "mandate": "MD123",
+            "customer": "CU123",
+            "customer_bank_account": "BA123"
+          }
+        }
+    }))
   })
+
+
+
 ]

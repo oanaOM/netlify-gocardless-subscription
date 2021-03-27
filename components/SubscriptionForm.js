@@ -12,50 +12,31 @@ import {
 import * as Color from "../styles/colors";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function SubscriptionForm({ user }) {
 
   const [error, setError] = useState({ "msg": false });
+
+  const router = useRouter();
 
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const formData = evt.target.elements;
 
-    const newSubscription = {
+    const data = {
       "email": formData.email.value,
       "family_name": formData.family_name.value,
       "given_name": formData.given_name.value
     };
+    
+    await axios.post('/api/customers', data)
+      .then((res) => {
+        // console.log("client: ", res.data.redirect_url);
+        router.push(res.data.redirect_url)
+      })
 
-    let redirect_flow_url = "";
-    let redirect_flow_id = "";
-    let mandate_id = "";
-
-    // start creating the redirect flow
-   await axios.post("/mock/redirect_flows", newSubscription)
-    .then( ( res ) =>
-        {
-          redirect_flow_url = res.data.redirect_flows.redirect_url
-          redirect_flow_id = res.data.redirect_flows.id
-          console.log(res);
-          console.log(">>> 1. Redirect flow id:", redirect_flow_id);
-          console.log(">>> 1. Redirect flow redirect url:", redirect_flow_url);
-        }
-      )
-    .catch((err)=>console.error(err))
-
-    // complete the redirect flow
-    await axios.post(`/mock/redirect_flows/${redirect_flow_id}/actions/complete`, redirect_flow_id)
-    .then( ( res ) =>
-        {
-          mandate_id = res.data.redirect_flows.links.mandate;
-          console.log(">>> 2. Complete redirect confirmation URL:", res.data.redirect_flows.confirmation_url);
-          console.log(">>> 2. Mandate id", mandate_id);
-          console.log(">>> 2. Complete redirect success URL:", res.data.redirect_flows.success_redirect_url);
-        }
-      )
-    .catch((err)=>console.error(err))
 
     return evt.target.elements;
   };

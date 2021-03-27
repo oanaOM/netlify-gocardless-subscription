@@ -1,6 +1,6 @@
 import Cors from "cors";
 import initMiddleware from "../../lib/init-middleware";
-import { setCustomerTest } from "../../lib/gocardless";
+import { setRedirectFlow } from "../../lib/gocardless";
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -16,25 +16,16 @@ export default async function handler(req, res) {
   // Run cors
   await cors(req, res);
 
-  console.log(req.headers.referer);
-
-  console.log("_____________");
-
   switch (req.method) {
     case "GET":
       console.log("GET request it's been initiated ");
-      res.json({
-        text: "You should not see this via a CORS request.",
-      });
+
       break;
     case "POST":
-      console.log("POST request it's been initiated ");
-      const customer = await setCustomerTest(req.body);
-      let response = {
-        message: customer,
-      };
-      console.log(response)
-      return res.json(response);
+    var customer = await setRedirectFlow(req.body);
+    return res.json(customer);
+    // res.json({ message: "Hello Everyone!" });
+
     default:
       break;
   }

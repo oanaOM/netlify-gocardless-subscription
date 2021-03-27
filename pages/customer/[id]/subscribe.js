@@ -7,7 +7,8 @@ import BackToCustomer from "../../../components/BackToCustomer";
 
 export default function Subscribe() {
   const { user } = useIdentityContext();
-  const { full_name } = user.user_metadata ? user.user_metadata : "";
+  // const { full_name } = user.user_metadata ? user.user_metadata : "";
+  const { full_name } = "om";
 
   return (
     <SplitPageLayout
