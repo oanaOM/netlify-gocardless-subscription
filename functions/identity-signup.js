@@ -22,7 +22,6 @@ exports.handler = async (event) => {
       gocardlessID: gocardlessID,
     },
   })
-    .then((res) => res.json())
     .catch((err) => console.error(err))
 
   console.log("user:", JSON.stringify(user, null, 2));
