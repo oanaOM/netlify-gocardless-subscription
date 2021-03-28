@@ -23,7 +23,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(async () => {
-    console.log("Identity exists", identity)
+    
     if (identity) {
       // hacky workaround: if the user is already logged in and lands back on this page, log him out
       identity.logoutUser();
@@ -35,8 +35,6 @@ export default function Home() {
       // const { roles } = identity.user.app_metadata;
       // setRoles(roles);
     }
-
-
 
   }, []);
 
@@ -72,7 +70,7 @@ export default function Home() {
         onCloseDialog={() => setDialog(false)}
         onLogin={(user) => router.push({
           "pathname": "/customer/[id]",
-          "query": { "id": user.user_metadata.full_name }
+          "query": { "id": user.id }
         })}
         onSignup={(user) => console.log("welcome ", user?.user_metadata)}
         onLogout={() => console.log("bye ")}

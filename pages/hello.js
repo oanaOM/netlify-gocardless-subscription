@@ -1,36 +1,32 @@
-import React from "react";
-import { useEffect } from "react";
-import axios from "axios";
+import React, { useRef } from "react";
 
-const { faunaFetch } = require("../functions/utils/fauna");
+import { useAppReducer, useAppState } from "../context/state";
 
 export default function Hello({ data }) {
-  
-    console.log(data.data.getUserByGocardlessID.gocardlessID);
-    
-    return (
-        <div>Hello</div>
-    );
-}
+  const dispatch = useAppReducer();
+  const state = useAppState();
+  const inputRef = useRef();
 
+  console.log(state);
 
+  const addSubs = (e) => {
+    const newSubs = inputRef.current.value;
 
-
-export async function getServerSideProps(context) {
-  const data = await faunaFetch({
-    query: `
-      query {
-        getUserByGocardlessID(gocardlessID: "2"){
-          gocardlessID
-          netlifyID
-        }
-      }
-    `
-  });
-
-  return {
-    props: {
-      data,
-    },
+    if (!!newSubs.trim()) {
+      dispatch({ type: "ADD_SUBS", subs: newSubs });
+    }
+    e.preventDefault();
+    inputRef.current.value = "";
   };
+  console.log(state)
+
+  return (
+    <>
+      <div>Hello</div>
+      <form onSubmit={addSubs}>
+        <input ref={inputRef} placeholder="Add new subs" autoFocus />
+        <button type="submit">Add</button>
+      </form>
+    </>
+  );
 }

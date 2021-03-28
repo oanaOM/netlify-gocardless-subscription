@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import styled from "@emotion/styled";
 import { Button } from "./Library";
+import { useAppReducer } from "../context/state";
 
 const Box = styled.section`
   border: 1px solid #9ad9c7;
@@ -25,12 +26,25 @@ export default function SubscriptionBox({
   imgSRC,
   customer
 }) {
+  
   const router = useRouter();
+
+  const dispatch = useAppReducer();
+
   const handleSubscription = (evt) => {
     evt.preventDefault();
     const subscriptionType = evt.target.innerText;
-    localStorage.setItem("subscription", subscriptionType);
+    // localStorage.setItem("subscription", subscriptionType);
 
+    if (!!subscriptionType.trim()) {
+      dispatch({
+        type: "ADD_SUBS",
+        subs: {
+          category: title,
+          value: subscription
+        },
+      });
+    }
     router.push({
       "pathname": `/customer/${customer}/subscribe`,
     });

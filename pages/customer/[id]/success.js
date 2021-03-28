@@ -10,6 +10,7 @@ import {
 
 import SplitPageLayout from "../../../components/layout/SplitPageLayout";
 import BackToCustomer from "../../../components/BackToCustomer";
+import { faunaFetch } from "../../../functions/utils/fauna";
 
 export default function Success({ data }) {
   console.log("redirect flow complete: ", data);
@@ -42,7 +43,32 @@ export async function getServerSideProps(context) {
 
   const data = await setRedirectFlowComplete(redirect_flow_id);
 
+  const mandate = data.links.mandate;
+  const customer = data.links.customer;
+
+  console.log(">>>customer: ", customerID);
   console.log(">>>data: ", data);
+
+  // TODO: update DB with mandate ID
+
+  // const updateMandateResponse = await faunaFetch({
+  //   query: `
+  //   mutation($netlifyID: ID!, $gocardlessID: ID!, $mandateID: String) {
+  //     updateUser(id: 294308553910387207 data: {netlifyID: $netlifyID gocardlessID: $gocardlessID mandateID: $mandateID}) {
+  //       _id
+  //       mandateID
+  //       gocardlessID
+  //       netlifyID
+  //     }
+  //   }
+  //   `,
+  //   variables: {
+  //     netlifyID: 345,
+  //     gocardlessID: customer,
+  //     mandateID: mandate,
+  //   },
+  // });
+
 
   return {
     props: {

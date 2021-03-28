@@ -1,6 +1,7 @@
 type User {
     netlifyID: ID!
     gocardlessID: ID!
+    mandateID: String
 }
 
 type Query{

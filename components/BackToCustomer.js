@@ -2,15 +2,16 @@ import React from "react";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 
-export default function BackToCustomer({ full_name }) {
+export default function BackToCustomer({ id }) {
   return (
     <Link
       href={{
-        pathname: `/customer/${full_name}`,
+        pathname: `/customer/${id}`,
       }}
       passHref
     >
       <FaArrowLeft />
+      
     </Link>
   );
 }

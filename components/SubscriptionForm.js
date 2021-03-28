@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useAppState } from "../context/state";
 
 import {
   Button,
@@ -19,6 +20,8 @@ export default function SubscriptionForm({ user }) {
   const [error, setError] = useState({ "msg": false });
 
   const router = useRouter();
+
+  const { subs } = useAppState();
 
 
   const handleSubmit = async (evt) => {
@@ -41,11 +44,15 @@ export default function SubscriptionForm({ user }) {
     return evt.target.elements;
   };
 
+  const { category } = subs;
+
+  console.log(subs);
+
   return (
     <>
       <div>
         <h2>Welcome {user}!</h2>
-        <p>Basic Subscription</p>
+        <p>{ category}</p>
         {error.msg
             ? <span className="error">Ups! something went wrong.</span>
             : null}

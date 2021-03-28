@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Subscription from "../../../components/Subscription";
 import Head from "next/head";
 import NavBar from "../../../components/Navbar";
-import { useState } from "react";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useIdentityContext, useNetlifyIdentity } from "react-netlify-identity";
 
-// const { faunaFetch } = require("./utils/fauna");
+const { faunaFetch } = require("../../../functions/utils/fauna");
 
-export default function Customer() {
-  const [customer, setCustomer] = useState();
-
-  const router = useRouter();
-
+export default function Customer({ data }) {
+  const {user} = useIdentityContext();
   useEffect(() => {
-    setCustomer(router.query.id);
+    // TODO: if the customer has any mandate setup redirect him to manage page
+    // otherwise redirect him to form page to setup a new mandate
+    const { mandateID } = data;
+    
+  
   }, []);
+
   return (
     <>
       <Head>
@@ -25,32 +26,41 @@ export default function Customer() {
       </Head>
       <NavBar showBrandLogo={false} />
       <main>
-        <h1>Welcome {customer}!</h1>
+        <h1>Welcome {user.user_metadata.full_name}!</h1>
         <h3>Choose a subscription plan</h3>
-        <Subscription customer={customer} />
+        <Subscription customer={user.id} />
       </main>
     </>
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const data = await faunaFetch({
-//     query: `
-//       query {
-//         getUserByGocardlessID(gocardlessID: "2"){
-//           gocardlessID
-//           netlifyID
-//         }
-//       }
-//     `,
-//     variables: {
-//       netlifyID: user.sub,
-//     },
-//   });
+export async function getServerSideProps(context) {
 
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// }
+  const userID = context.params.id;
+
+  const response = await faunaFetch({
+    query: `
+      query($netlifyID: ID!) {
+        getUserByNeltifyID(netlifyID: $netlifyID) {
+          _id
+          netlifyID
+          gocardlessID
+          mandateID
+        }
+      }
+    `,
+    variables: {
+      netlifyID: userID,
+    },
+  });
+
+  const { data } = response;
+
+  console.log("dbUser", data);
+
+  return {
+    props: {
+      data: data.getUserByNeltifyID,
+    },
+  };
+}
