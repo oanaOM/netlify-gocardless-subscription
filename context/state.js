@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { useIdentityContext } from "react-netlify-identity-widget";
 import { saveState, loadState } from './local-storage';
 
 const AppContext = createContext();

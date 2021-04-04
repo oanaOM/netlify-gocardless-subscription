@@ -10,10 +10,14 @@ import {
 
 import SplitPageLayout from "../../../components/layout/SplitPageLayout";
 import BackToCustomer from "../../../components/BackToCustomer";
-import { faunaFetch } from "../../../functions/utils/fauna";
+import { useAppState } from "../../../context/state"
+
 
 export default function Success({ data }) {
+  const state = useAppState();
+
   console.log("redirect flow complete: ", data);
+  console.log("state: ", state);
   return (
     <SplitPageLayout
       leftSideChildren={<BackToCustomer full_name={"om"} />}
@@ -22,7 +26,7 @@ export default function Success({ data }) {
           <h1>Subscription summary</h1>
           <h3>CURRENT PLAN</h3>
           <hr />
-          <h3>Basic Subscription</h3>
+          {/* <h3>{ state }</h3> */}
           <Form onSubmit={() => {}}>
             <FormLabel htmlFor="family_name" isRequired>
               Amount
@@ -43,10 +47,9 @@ export async function getServerSideProps(context) {
 
   const data = await setRedirectFlowComplete(redirect_flow_id);
 
-  const mandate = data.links.mandate;
-  const customer = data.links.customer;
+  const customer = data ? data.links.customer : "";
 
-  console.log(">>>customer: ", customerID);
+  console.log(">>>customer: ", customer);
   console.log(">>>data: ", data);
 
   // TODO: update DB with mandate ID
