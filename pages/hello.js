@@ -14,8 +14,11 @@ export default function Hello({ data }) {
   // console.log(state);
 
   useEffect(() => {
+    var config = {
+      headers: { "Access-Control-Allow-Origin": "*" },
+    };
     axios
-      .get(`/api/mandates`)
+      .get("/.netlify/functions/get-subscriptions", config)
       .then((res) => {
         console.log("res ", res.data);
         // console.log("res ", response,len);
