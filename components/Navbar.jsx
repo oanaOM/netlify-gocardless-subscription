@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Button } from "./Library";
 import styled from "@emotion/styled";
 import Logo from "./Logo";
@@ -8,7 +10,7 @@ const Container = styled.header`
   border-bottom: 2px solid #9ad9c7;
   background-color: white;
   display: flex;
-  justify-content: space-between;
+  justify-content: start-end;
   padding: 10px 20px;
   position: sticky;
   text-align: right;
@@ -36,6 +38,7 @@ export default function NavBar({ showBrandLogo }) {
     <Container>
       <div>{showBrandLogo ? <Logo width={35} height={35} /> : ""}</div>
       <div>
+        <Button onClick={handleLogout}>Logout</Button>
         <Button onClick={handleLogout}>Logout</Button>
       </div>
     </Container>

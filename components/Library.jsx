@@ -29,9 +29,9 @@ const buttonVariants = {
     background: Colors.RED_DANGER,
     color: "white",
   },
-  warning: {
-    background: Colors.YELLOW_ISH,
-    color: "black",
+  link: {
+    background: "inherit",
+    minWidth: "inherit",
   },
   info: {
     background: Colors.PINK_IVORY,
@@ -46,7 +46,8 @@ const Button = styled.button(
     fontSize: "1rem",
     borderRadius: "20px",
     fontWeight: "bold",
-    minWidth: "80px",
+    minWidth: "180px",
+    color: "white",
     ":hover": {
       backgroundColor: `${Colors.GREEN_DARKER}`,
     },
@@ -101,6 +102,13 @@ const FormButtons = styled.div({
   columnGap: "25px",
   display: "flex",
   flexDirection: "row",
+  justifyContent: "flex-end",
+});
+
+const FormButtonsHorizontal = styled.div({
+  rowGap: "25px",
+  display: "flex",
+  flexDirection: "column",
   justifyContent: "flex-end",
 });
 
@@ -164,4 +172,5 @@ export {
   FormLabel,
   SelectDropdown,
   FormButtons,
+  FormButtonsHorizontal,
 };

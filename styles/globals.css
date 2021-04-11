@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300&display=swap');
+
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+  font-family: 'Kiwi Maru', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Ubuntu, sans-serif;
   background-color: #fafafa;
 }
@@ -13,7 +16,7 @@ body {
 
 main,
 header {
-  padding: 2rem;
+  padding: 2rem 2rem 0 2rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -31,7 +34,7 @@ code {
 .container {
   xheight: 100vh;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }

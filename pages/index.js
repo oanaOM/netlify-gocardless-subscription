@@ -4,39 +4,59 @@ import { useState } from "react";
 import Head from "next/head";
 import {
   IdentityModal,
-  useIdentityContext
+  useIdentityContext,
 } from "react-netlify-identity-widget";
 import "react-netlify-identity-widget/styles.css";
 import "@reach/tabs/styles.css";
 import { useEffect } from "react";
 
-
-import Logo from "../components/Logo";
-import { Button, FormButtons } from "../components/Library";
+import { Button, FormButtons } from "@components/Library";
 import { useRouter } from "next/router";
-
+import axios from "axios";
+import { useAppReducer } from "@context/state";
+import Subscriptions from "@components/Subscription";
 
 export default function Home() {
   const identity = useIdentityContext();
   const [dialog, setDialog] = useState(false);
 
+  const dispatch = useAppReducer();
+
   const router = useRouter();
 
   useEffect(async () => {
-    
     if (identity) {
-      // hacky workaround: if the user is already logged in and lands back on this page, log him out
       identity.logoutUser();
-      // TODO: re-auth the user if token exists
-      // identity
-      //   .getFreshJWT(identity.user.token.access_token)
-      //   .then((jwt) => setAccessToken(jwt));
-
-      // const { roles } = identity.user.app_metadata;
-      // setRoles(roles);
+      localStorage.removeItem("state");
     }
-
   }, []);
+
+  const handleLogin = (user) => {
+    // check if the user is already a GC customer
+    axios
+      .get("/api/customers")
+      .then((res) => {
+        const gcCustomer = res.data.customers.filter(
+          (customer) => customer.email === user.email
+        )[0];
+
+        // if a GC customer: Store his details
+        if (gcCustomer) {
+          dispatch({
+            type: "ADD_CUSTOMER",
+            customer: gcCustomer,
+          });
+        }
+
+        // redirect him to the subscription manage page
+        router.push({
+          pathname: "/customer/[id]/manage",
+          query: { id: user.id },
+        });
+        // redirectCustomer(user.id, gcCustomer);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -47,7 +67,6 @@ export default function Home() {
       <header className="header">
         {!identity.isLoggedIn && (
           <>
-            <Logo src="nerd-doggie.png" width="120" height="120" />
             <h1>Happy Paws</h1>
             <p>Fresh homemade food prepared for your dog. Vet approved.</p>
           </>
@@ -58,9 +77,9 @@ export default function Home() {
           <>
             <FormButtons>
               <Button onClick={() => setDialog(true)}>Log in</Button>
-              {/* <Button onClick={onLoginButton}>Log in</Button> */}
               <Button onClick={() => setDialog(true)}>Sign up</Button>
             </FormButtons>
+            <Subscriptions />
           </>
         )}
         {/* <Footer/> */}
@@ -68,10 +87,7 @@ export default function Home() {
       <IdentityModal
         showDialog={dialog}
         onCloseDialog={() => setDialog(false)}
-        onLogin={(user) => router.push({
-          "pathname": "/customer/[id]",
-          "query": { "id": user.id }
-        })}
+        onLogin={handleLogin}
         onSignup={(user) => console.log("welcome ", user?.user_metadata)}
         onLogout={() => console.log("bye ")}
       />

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useRouter } from "next/router";
 
 import styled from "@emotion/styled";
@@ -24,30 +25,39 @@ export default function SubscriptionBox({
   description,
   subscription,
   imgSRC,
-  customer
+  customer,
 }) {
-  
   const router = useRouter();
-
   const dispatch = useAppReducer();
 
-  const handleSubscription = (evt) => {
-    evt.preventDefault();
-    const subscriptionType = evt.target.innerText;
-    // localStorage.setItem("subscription", subscriptionType);
 
-    if (!!subscriptionType.trim()) {
-      dispatch({
-        type: "ADD_SUBS",
-        subs: {
-          category: title,
-          value: subscription
-        },
-      });
-    }
-    router.push({
-      "pathname": `/customer/${customer}/subscribe`,
+  useEffect(() => {
+    const value = subscription.split(" ")[0];
+
+    // update state
+    dispatch({
+      type: "ADD_SUBS",
+      subs: {
+        category: title,
+        value: value,
+      },
     });
+  }, [])
+
+  const handleSubscription = async (evt) => {
+    evt.preventDefault();
+    
+    // start GC redirect flow
+    await axios
+    .post("/api/customers", {
+      email: customer.email,
+    })
+    .then((res) => {
+        router.push(res.data.redirect_url);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   return (
