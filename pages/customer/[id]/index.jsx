@@ -31,8 +31,7 @@ export default function Customer({ data }) {
   );
 }
 
-export async function getServerSideProps(context) {
-
+export async function getInitialProps(context) {
   const userID = context.params.id;
 
   const response = await faunaFetch({

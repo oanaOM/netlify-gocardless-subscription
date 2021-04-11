@@ -97,7 +97,7 @@ export default function Subscribe({ data }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getInitialProps(context) {
   const { redirect_flow_id } = context.query;
 
   const data = await setRedirectFlowComplete(redirect_flow_id);
