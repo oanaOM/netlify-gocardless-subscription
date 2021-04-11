@@ -3,6 +3,6 @@
   command = "npm run dev"
 
 [build]
-  command = "npm run build && npm run export"
+  command = "npm run build && npm run start"
   publish = "out"
   functions = "functions"
