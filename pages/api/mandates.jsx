@@ -1,6 +1,6 @@
 import Cors from "cors";
 import initMiddleware from "../../lib/init-middleware";
-import { setRedirectFlow } from "../../lib/gocardless";
+import { getActiveMandates } from "../../lib/gocardless";
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -19,13 +19,10 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
       console.log("GET request it's been initiated ");
-
-      break;
+      var mandates = await getActiveMandates();
+      return res.json(mandates);
     case "POST":
-    var customer = await setRedirectFlow(req.body);
-    return res.json(customer);
-    // res.json({ message: "Hello Everyone!" });
-
+      break;
     default:
       break;
   }

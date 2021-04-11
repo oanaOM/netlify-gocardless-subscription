@@ -1,7 +1,8 @@
-import React from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
 
-import Link from "next/link";
+import { useIdentityContext } from "react-netlify-identity";
+import { useRouter } from "next/router";
+import Logout from "@components/Logout";
 
 import styled from "@emotion/styled";
 import Logo from "../Logo";
@@ -44,7 +45,7 @@ const SubscriptionDetails = styled.div`
   align-items: top;
 `;
 
-const SubscriptionDetailsTitle = styled.h3`
+const SubscriptionDetailsTitle = styled.h2`
   color: rgba(26, 26, 26, 0.5);
 `;
 
@@ -56,27 +57,39 @@ const Subscription = styled.div`
 export default function SplitPageLayout({
   leftSideChildren,
   rightSideChildren,
+
 }) {
+
+  const { user } = useIdentityContext();
+  const [fullname, setFullName] = useState();
+
+  const router = useRouter();
+  
+  useEffect(() => {
+    setFullName(user.user_metadata.full_name);
+  }, [setFullName]);
+
   return (
     <Container>
       <Main>
         <LeftSide>
           <SubscriptionDetails>
             <div>
-              {leftSideChildren}
               <Logo src="happy_dog_face.png" width="35" height="35" />
             </div>
             <SubscriptionDetailsTitle>
-              Subscribe to Pro
+              Welcome {fullname}!
             </SubscriptionDetailsTitle>
-            <Subscription>Subscribe to Pro</Subscription>
+            {leftSideChildren && leftSideChildren}
+            {!leftSideChildren && (
+              <Subscription>
+                <Logout/>
+              </Subscription>
+            )}
             <GCFooter />
           </SubscriptionDetails>
         </LeftSide>
-        <RightSide>
-          {/* <SubscriptionForm user={full_name} /> */}
-          {rightSideChildren}
-        </RightSide>
+        <RightSide>{rightSideChildren}</RightSide>
       </Main>
     </Container>
   );

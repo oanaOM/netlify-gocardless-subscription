@@ -1,23 +1,20 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 
-import Subscription from "../../../components/Subscription";
+import Subscription from "@components/Subscription";
 import Head from "next/head";
-import NavBar from "../../../components/Navbar";
-import { useEffect } from "react";
-import { useIdentityContext, useNetlifyIdentity } from "react-netlify-identity";
+import NavBar from "@components/Navbar";
+import { useIdentityContext } from "react-netlify-identity";
 
-const { faunaFetch } = require("../../../functions/utils/fauna");
+const { faunaFetch } = require("@functions/utils/fauna");
 
 export default function Customer({ data }) {
-  const {user} = useIdentityContext();
-  useEffect(() => {
-    // TODO: if the customer has any mandate setup redirect him to manage page
-    // otherwise redirect him to form page to setup a new mandate
-    const { mandateID } = data;
-    
-  
-  }, []);
+  const { user } = useIdentityContext();
+  const [fullname, setFullName] = useState();
 
+  useEffect(() => {
+    setFullName(user.user_metadata.full_name);
+  },[])
+    
   return (
     <>
       <Head>
@@ -26,9 +23,9 @@ export default function Customer({ data }) {
       </Head>
       <NavBar showBrandLogo={false} />
       <main>
-        <h1>Welcome {user.user_metadata.full_name}!</h1>
+        <h1>Welcome {fullname}!</h1>
         <h3>Choose a subscription plan</h3>
-        <Subscription customer={user.id} />
+        <Subscription customer={user} />
       </main>
     </>
   );
