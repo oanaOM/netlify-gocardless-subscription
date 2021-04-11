@@ -2,8 +2,13 @@
 /node_modules
 .next
 .env
+out
 functions/node_modules
 .DS_Store
 
 # Local Netlify folder
 .netlify
+
+# testing
+/coverage
+
