@@ -16,22 +16,23 @@ export default function Manage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const customerID = state.customer.id;
+  console.log(customerID);
 
   useEffect(async () => {
     // if customer already exists, check if he has any subscriptions
     if (state.customer.id) {
       setIsLoading(true);
       await axios
-      .get(`/api/subscriptions?id=${customerID}`)
+        .get(`/.netlify/functions/get-subscriptions?id=${customerID}`)
         .then((res) => {
-        setSubscriptions(res.data);
-        // store the first subscription just to use the mandate ID
-        dispatch({
-          type: "ADD_GC_SUBS",
-          subs: res.data[0].links,
-        });
-        setIsLoading(false);
-      })
+          setSubscriptions(res.data);
+          // store the first subscription just to use the mandate ID
+          dispatch({
+            type: "ADD_GC_SUBS",
+            subs: res.data[0].links,
+          });
+          setIsLoading(false);
+        })
         .catch((err) => console.error(err));
     }
   }, [setSubscriptions]);

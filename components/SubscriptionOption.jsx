@@ -44,7 +44,7 @@ export default function SubscriptionOption({
     // if NOT a GC customer start GC redirect flow
     if (!state.customer.id) {
       await axios
-        .post("/api/customers", {
+        .post("/.netlify/functions/post-customer", {
           email: user.email,
           netlifyID: user.id,
         })
@@ -60,7 +60,7 @@ export default function SubscriptionOption({
       // customer is already signed in so we have an mandate
       // query for the customer mandate and store it!
       await axios
-        .get("/api/mandates")
+        .get("/.netlify/functions/get-mandates")
         .then((res) => {
           const mandates = res.data;
           customer_mandate = mandates.filter(

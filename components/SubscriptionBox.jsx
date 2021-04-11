@@ -49,10 +49,10 @@ export default function SubscriptionBox({
     
     // start GC redirect flow
     await axios
-    .post("/api/customers", {
-      email: customer.email,
-    })
-    .then((res) => {
+      .post("/.netlify/functions/post-customer", {
+        email: customer.email,
+      })
+      .then((res) => {
         router.push(res.data.redirect_url);
       })
       .catch((err) => {

@@ -83,7 +83,7 @@ export default function SplitPageLayout({
             {leftSideChildren && leftSideChildren}
             {!leftSideChildren && (
               <Subscription>
-                <Logout/>
+                {/* <Logout/> */}
               </Subscription>
             )}
             <GCFooter />

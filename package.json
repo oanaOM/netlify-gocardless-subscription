@@ -29,6 +29,7 @@
     "@reach/visually-hidden": "^0.13.0",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
+    "gocardless-nodejs": "^1.4.3",
     "netlify-cli": "^3.10.12",
     "next": "^10.0.6",
     "react": "^17.0.1",

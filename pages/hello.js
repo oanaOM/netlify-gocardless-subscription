@@ -9,7 +9,7 @@ export default function Hello({ data }) {
   const inputRef = useRef();
   const [subscriptions, setSubscriptions] = useState();
 
-  const customerID = "CU000FADM5P0NM";
+  const customerID = "CU000FC1FYVME7";
 
   // console.log(state);
 
@@ -17,14 +17,18 @@ export default function Hello({ data }) {
     var config = {
       headers: { "Access-Control-Allow-Origin": "*" },
     };
-    axios
-      .get("/.netlify/functions/get-subscriptions", config)
-      .then((res) => {
-        console.log("res ", res.data);
-        // console.log("res ", response,len);
-      })
-      .catch((err) => console.error(err));
-    console.log("manage page: ", customerID);
+     axios
+        .get(`/.netlify/functions/get-subscriptions?id=${customerID}`)
+        .then((res) => {
+          setSubscriptions(res.data);
+          // store the first subscription just to use the mandate ID
+          dispatch({
+            type: "ADD_GC_SUBS",
+            subs: res.data[0].links,
+          });
+        })
+        .catch((err) => console.error(err));
+    console.log("manage page: ", subscriptions);
   }, [])
 
   // const addSubs = (e) => {

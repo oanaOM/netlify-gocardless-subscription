@@ -1,18 +1,13 @@
-const gocardless = require("gocardless-nodejs");
+const {client} = require('./utils/gocardless');
 
-const constants = require("gocardless-nodejs/constants");
+exports.handler = async (event) => {
+  // get the customer ID from the query request
+  const queryID = event.queryStringParameters.id;
 
-const client = gocardless(
-  // We recommend storing your access token in an environment
-  // variable for security
-  process.env.REACT_APP_GC_AUTHORIZATION_TOKEN,
-  // Change this to constants.Environments.Live when you're ready to go live
-  constants.Environments.Sandbox
-);
-
-exports.handler = async () => {
   try {
-    let { subscriptions } = await client.subscrptions.list();
+    let { subscriptions } = await client.subscriptions.list({
+      customer: queryID
+    });
 
     console.log("Get GC subscriptions:", subscriptions);
 
@@ -26,9 +21,7 @@ exports.handler = async () => {
       body: JSON.stringify(subscriptions),
     };
   } catch (err) {
-    return {
-      statusCode: 404,
-      body: JSON.stringify(err),
-    };
+    console.error(err);
+    throw err;
   }
 };

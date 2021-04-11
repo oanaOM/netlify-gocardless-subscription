@@ -5,7 +5,7 @@ import SplitPageLayout from "@components/layout/SplitPageLayout";
 import { useAppState } from "@context/state";
 import { Button, FormButtonsHorizontal } from "@components/Library";
 
-import { setRedirectFlowComplete } from "@lib/gocardless";
+import { setRedirectFlowComplete } from "../../../functions/utils/gocardless";
 import { useAppReducer } from "@context/state";
 import { useRouter } from "next/router";
 import { useIdentityContext } from "react-netlify-identity-widget";
@@ -35,7 +35,7 @@ export default function Subscribe({ data }) {
 
   const handleConfirm = async () => {
     await axios
-      .post("/api/subscriptions", {
+      .post("/.netlify/functions/post-subscription", {
         amount: value,
         subscription_type: state.subs.category,
         mandate: state.links.mandate,
@@ -97,7 +97,7 @@ export default function Subscribe({ data }) {
   );
 }
 
-export async function getInitialProps(context) {
+export async function getServerSideProps(context) {
   const { redirect_flow_id } = context.query;
 
   const data = await setRedirectFlowComplete(redirect_flow_id);

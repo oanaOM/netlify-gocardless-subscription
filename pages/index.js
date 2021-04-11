@@ -34,7 +34,7 @@ export default function Home() {
   const handleLogin = (user) => {
     // check if the user is already a GC customer
     axios
-      .get("/api/customers")
+      .get("/.netlify/functions/get-gc-customers")
       .then((res) => {
         const gcCustomer = res.data.customers.filter(
           (customer) => customer.email === user.email
