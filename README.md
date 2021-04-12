@@ -1,7 +1,7 @@
 # Happy paws ![Happy paws](happy_dog_face.png)
 
 
-Happy paws is proof of concept app used to experiment with #gocardless API integration. The main scope of this app is to impersonate the role of partner integration, get familiar with GC API and get familiar with the subscription workflow.
+Happy paws is proof of concept app used to experiment with GoCardless API integration. The main scope of this app is to impersonate the role of partner integrator, get familiar with GC API and get familiar with the subscription workflow.
 
 A customer of Happy Paws app can create an online account and subscribe to a variety of monthly subscriptions. He can create view all his active subscriptions and create as many subscriptions as he wants.
 
