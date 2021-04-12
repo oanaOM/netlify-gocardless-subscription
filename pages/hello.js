@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 import { useAppReducer, useAppState } from "../context/state";
 
@@ -9,16 +10,21 @@ export default function Hello({ data }) {
   const inputRef = useRef();
   const [subscriptions, setSubscriptions] = useState();
 
+  const router = useRouter();
+
   const customerID = "CU000FC1FYVME7";
+  const flow_id = router.query.redirect_flow_id;
 
   // console.log(state);
 
   useEffect(() => {
-    var config = {
-      headers: { "Access-Control-Allow-Origin": "*" },
-    };
+    // var config = {
+    //   headers: { "Access-Control-Allow-Origin": "*" },
+    // };
      axios
-        .get(`/.netlify/functions/get-subscriptions?id=${customerID}`)
+        .post("/.netlify/functions/complete-redirect-flow", {
+           redirect_flow_id: flow_id,
+         })
         .then((res) => {
           setSubscriptions(res.data);
           // store the first subscription just to use the mandate ID
@@ -28,7 +34,7 @@ export default function Hello({ data }) {
           });
         })
         .catch((err) => console.error(err));
-    console.log("manage page: ", subscriptions);
+    console.log("manage page: ", router.query);
   }, [])
 
   // const addSubs = (e) => {
@@ -56,11 +62,11 @@ export default function Hello({ data }) {
     <>
       <div>Hello</div>
       {subscriptions?.length}
-      <ul>
+      {/* <ul>
         {subscriptions?.map(subscription => {
         return <p key={subscription.id}>!!!{subscription.id}</p>;
         })}
-      </ul>
+      </ul> */}
       <form onSubmit={() => {}}>
         <input ref={inputRef} placeholder="Add new subs" autoFocus />
         <button type="submit">Add</button>

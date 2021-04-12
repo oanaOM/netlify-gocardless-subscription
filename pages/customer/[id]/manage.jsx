@@ -26,6 +26,7 @@ export default function Manage() {
         .get(`/.netlify/functions/get-subscriptions?id=${customerID}`)
         .then((res) => {
           setSubscriptions(res.data);
+          console.log("subscs", res.data);
           // store the first subscription just to use the mandate ID
           dispatch({
             type: "ADD_GC_SUBS",

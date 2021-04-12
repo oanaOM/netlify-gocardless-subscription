@@ -9,7 +9,7 @@ exports.handler = async (context) => {
       const redirectFlow = await client.redirectFlows.create({
         description: "Happy Paws",
         session_token: "dummy_session_token3",
-        success_redirect_url: `https://nervous-minsky-4dcffc.netlify.app/customer/${netlifyID}/subscribe`,
+        success_redirect_url: `http://localhost:8888/customer/${netlifyID}/subscribe`,
         // Optionally, prefill customer details on the payment page
         prefilled_customer: {
           email: email,

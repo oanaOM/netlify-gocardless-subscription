@@ -28,6 +28,7 @@ const buttonVariants = {
   danger: {
     background: Colors.RED_DANGER,
     color: "white",
+    minWidth: "50px",
   },
   link: {
     background: "inherit",
