@@ -1,4 +1,5 @@
-# [Happy Paws](public/happy_dog_face.png)
+# Happy paws ![Happy paws](happy_dog_face.png)
+
 
 Happy paws is proof of concept app used to experiment with #gocardless API integration. The main scope of this app is to impersonate the role of partner integration, get familiar with GC API and get familiar with the subscription workflow.
 
