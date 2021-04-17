@@ -3,7 +3,7 @@
   command = "npm run dev"
 
 [build]
-  command = "npm i --prefix=functions && npm run build"
+  command = "npm run build"
   publish = "out"
   functions = "functions"
 
