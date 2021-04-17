@@ -3,6 +3,9 @@
   command = "npm run dev"
 
 [build]
-  command = "npm run build"
+  command = "npm i --prefix=functions/ && npm run build"
   publish = "out"
   functions = "functions"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
